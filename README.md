@@ -31,7 +31,15 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 
 ## Magento Upgrades
 
-### Easy way to check difference between 
+### Easy way to check difference between two magento version installs/applied-patches
+- Get the current output of composer install
+    - git clone git@github.com:sdinteractive/HardwareSales-HardwareSales.git
+    - php -d memory_limit=-1 /usr/local/bin/composer install --ignore-platform-reqs
+- Clean Vendor
+    - rm -rf vendor/*
+- Upgrade
+    - php -d memory_limit=-1 /usr/local/bin/composer require magento/product-community-edition=2.3.7-p1 --no-update
+    - php -d memory_limit=-1 /usr/local/bin/composer update --ignore-platform-reqs
 
 ## Environment specific tips
 
@@ -41,6 +49,10 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 ### Hardwaresales home directory path
 - /var/www/vhosts/www.hardwaresales.com/current
 
+## Magento Specific
+
+### How controllers work in Magento 2 (TBC)
+- When you query a URL, that URL resolves to a Controller route, which based on that controller route hits a controller action and loads an associated block. Based on that block, it specifies a template and possibly child templates. The block can provide resources for that template
 
 ## Misc.
 
@@ -55,32 +67,10 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 ## To find admin panel URL
 - ssh into environment you want to find URL for
 - run `grep frontName app/etc/env.php` and go to URL `<env-URL>/<output of grep cmd>`
-- For example, `grep frontName app/etc/env.php` returns "'frontName' => 'adminvdI42K'," for Juliska staging, therefore the valid URL is mcstaging.juliska.com/adminvdI42K
+- For example, `grep frontName app/etc/env.php` returns "'frontName' => 'adminvdI42K',". Therefore the valid URL for Juliska staging is is mcstaging.juliska.com/adminvdI42K
 
 ### Print line
 - `file_put_contents(BP . '/var/log/{logname}.log', " Debug Content\n", FILE_APPEND);`
 
-
-
-
-=================================================
-
-## How Controllers work in Magento 2
-
-
-## config.xml format in Magento 2
-
-
-
-
-# Get the current output of composer install
-git clone git@github.com:sdinteractive/HardwareSales-HardwareSales.git
-php -d memory_limit=-1 /usr/local/bin/composer install --ignore-platform-reqs
-# Clean vendor
-rm -rf vendor
-# Upgrade
-(Manually update reference in composer.json from vertex to vertex inc)
-php -d memory_limit=-1 /usr/local/bin/composer require magento/product-community-edition=2.3.7-p1 --no-update
-php -d memory_limit=-1 /usr/local/bin/composer update --ignore-platform-reqs
-
-If we are doing a database backup before a deployment we DO NOT STRIP ANYTHING
+### Before Staging deployment
+- When obtaining a database backup before a staging deployment we DO NOT STRIP ANYTHING
