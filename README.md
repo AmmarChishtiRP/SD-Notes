@@ -57,6 +57,9 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 ### Crontab.xml vs .magento.app.yaml
 - Cron jobs defined in .magento.app.yaml run on their own separate threads and are considered more "critical" then cron jobs in crontab.xml
 
+### Where to verify if cron job was run
+- /var/log/platform/\<user\>/cron.log (must check all servers ex. stagine1, staging2, staging3)
+
 ## Misc.
 
 ### Upgrade a module to a specific version
