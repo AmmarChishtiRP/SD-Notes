@@ -13,9 +13,10 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 - Run `php -d memory_limit=-1 <command>`
 - To run composer update we use the command `php -d memory_limit=-1 /usr/local/bin/composer update`
 
-### Frontend of environment is messed up
-- Run `./compose/bin/bash`
-- `cd tools` and run `yarn`, then `cd ..` and run `yarn build`
+### Frontend of environment hasn't been compiled (May not need to do all steps, this is based on environment)
+- Run `./compose/bin/bash` to get into container
+- Run `rm -rf var/view_preprocessed/* pub/static/frontend/*` and then `./compose/bin/magento setup:static-content:deploy -f`
+- `cd tools` (from root) and run `yarn`, then cd to `../app/design/frontend/<user>` and run `yarn`, then `cd` (back to root) and run `yarn build`
 
 ## XDebug Commands
 
@@ -58,7 +59,8 @@ Fatal error: Allowed memory size of 2147483648 bytes exhausted (tried to allocat
 - Cron jobs defined in .magento.app.yaml run on their own separate threads and are considered more "critical" then cron jobs in crontab.xml
 
 ### Where to verify if cron job was run
-- /var/log/platform/\<user\>/cron.log (must check all servers ex. stagine1, staging2, staging3)
+- /var/log/platform/\<user\>/cron.log (must check all servers ex. staging1, staging2, staging3) for cron jobs defined in .magento.app.yaml
+- ~/var/log/cron.log.\<number>.gz for cron jobs defined in crontab.xml
 
 ## Misc.
 
